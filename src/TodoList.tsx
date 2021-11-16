@@ -66,7 +66,7 @@ export function Todolist(props: todolistProsType) {
                 <input
                     className={error ? "error" : ""}
                     value={inputValue}
-                    placeholder={"Enter your tasks..."}
+                    placeholder={"Enter your tasks.."}
                     onChange={onChangeHandler}
                     onKeyPress={onPressKeyHandler}
                 />
