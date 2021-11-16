@@ -1,27 +1,43 @@
 .App {
-  padding: 30px;
-  display: flex;
+    padding: 30px;
+    display: flex;
+
+
 }
 
 .App > div {
-  margin-right: 50px;
+    margin-right: 50px;
 }
 
-.todoList {
-  border: 1px darkslategray solid;
-  border-radius: 5px;
-  padding: 20px;
+.error {
+    border: red 3px solid;
 }
 
-.todoList button {
-  margin: 2px;
+.error-message {
+    color: red;
 }
 
-.todoList img {
-  width: 20px;
-  height: auto;
+.opacity {
+    opacity: 50%;
 }
 
-.active-filter {
-  background-color: cadetblue;
+.filtered-button {
+    background-color: cornflowerblue;
+}
+
+.borderTodolistBlock {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.borderTodolistBlock h3 {
+    text-align: center;
+}
+
+.filtered-button-position {
+    text-align: center;
+}
+
+.filtered-button-position button {
+    margin-right: 2px;
 }
