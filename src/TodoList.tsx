@@ -1,5 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {filterValuesType} from "./App";
+import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 export type TaskType = {
     id: string
@@ -11,69 +13,33 @@ type todolistProsType = {
     tasks: Array<TaskType>
     removeTask: (id: string, todoListID: string) => void
     changeFilter: (value: filterValuesType, todoListID: string) => void
-    addTask: (addedTitle: string, todoListID: string) => void
+    addTask: (TaskTitle: string, todoListID: string) => void
     changeStatus: (taskID: string, isDone: boolean, todoListID: string) => void
     filter: filterValuesType
     id: string
     removeTodoList: (todoListID: string) => void
+    changeTodolistTitle : (title: string,todoListID: string ) => void
+    changeTaskTitle : (taskID: string, title: string, todoListID: string) =>void
 }
 
-
 export function Todolist(props: todolistProsType) {
-
-    let [inputValue, setInputValue] = useState("")
-    let [error, setError] = useState<boolean>(false)
-
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.currentTarget.value)
-        setError(false)
-    }
-    const onPressKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            if (inputValue.trim() !== "") {
-                props.addTask(inputValue, props.id)
-                setInputValue("")
-            } else {
-                setError(true)
-                setInputValue("")
-
-            }
-        }
-    }
-    const onAddNewTask = () => {
-        if (inputValue.trim() !== "") {
-            props.addTask(inputValue, props.id)
-            setInputValue("")
-        } else {
-            setError(true)
-            setInputValue("")
-        }
-
+    const onAddNewTask = (title:string) => {
+            props.addTask(title, props.id)
     }
     const filteredAll = () => props.changeFilter("all", props.id)
     const filteredActive = () => props.changeFilter("active", props.id)
     const filteredCompleted = () => props.changeFilter("completed", props.id)
-
+    const changeTodolisTitle = (title:string) => {
+        props.changeTodolistTitle(title,props.id)
+    }
 
     return (
         <div className={"borderTodolistBlock"}>
             <h3>
-                {props.title}
+                <EditableSpan title={props.title} setNewTitle={changeTodolisTitle}/>
                 <button onClick={() => props.removeTodoList(props.id)}>X</button>
             </h3>
-            <div>
-                <input
-                    className={error ? "error" : ""}
-                    value={inputValue}
-                    placeholder={"Enter your tasks.."}
-                    onChange={onChangeHandler}
-                    onKeyPress={onPressKeyHandler}
-                />
-                <button onClick={onAddNewTask}>+</button>
-                {error ? <div className={"error-message"}>Title is required!</div> : null}
-            </div>
-
+            <AddItemForm addItem={onAddNewTask} />
             <ul>
                 {
                     props.tasks.map(t => {
@@ -84,13 +50,14 @@ export function Todolist(props: todolistProsType) {
                         const OnChangeCheckboxStatus = (e: ChangeEvent<HTMLInputElement>) => {
                             props.changeStatus(t.id, (e.currentTarget.checked), props.id)
                         }
-
-
+                        const changeTile = (title: string) => {
+                           props.changeTaskTitle(t.id,title,props.id )
+                        }
                         return <li className={t.isDone ? "opacity" : ""} key={t.id}>
                             <input type={"checkbox"}
                                    onChange={OnChangeCheckboxStatus}
                                    checked={t.isDone}/>
-                            <span>{t.title}</span>
+                            <EditableSpan title={t.title} setNewTitle={changeTile}/>
                             <button onClick={onClickRemoveTask}>X</button>
                         </li>
                     })

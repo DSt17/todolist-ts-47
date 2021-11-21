@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {v1} from 'uuid';
 import './App.css';
 import {TaskType, Todolist} from "./TodoList";
+import {AddItemForm} from "./AddItemForm";
 
 
 export type filterValuesType = "all" | "active" | "completed"
@@ -61,9 +62,27 @@ function App() {
         })
     }
 
+
+
+//Создаем фунуцию для изменения тайтла у таски
+    const changeTaskTitle = (taskID: string, title: string, todoListID: string) => {
+        setTasks({
+            ...tasks, [todoListID]: tasks[todoListID].map(
+                el => el.id === taskID ? {...el, title: title} :  el)
+        })
+    }
+
+
     //Меняем настройки фильтра сущности тудулиста
     function changeFilter(filter: filterValuesType, todoListID: string) {
         setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, filter: filter} : tl))
+    }
+
+
+    //Создаем функцию для изменения тайтла
+
+    const changeTodolistTitle = (title: string,todoListID: string ) => {
+        setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, title: title} : tl))
     }
 
 //----Функции удаляющие и добовляющие сущности тудулистов-----------
@@ -103,6 +122,8 @@ function App() {
                 changeStatus={changeTaskStatus}
                 filter={tl.filter}  // Берем из сущности тудулиста ВО ВРЕМЯ МАПА
                 removeTodoList={removeTodoList}
+                changeTodolistTitle ={changeTodolistTitle}
+                changeTaskTitle = {changeTaskTitle}
             />
         )
     })
@@ -110,6 +131,7 @@ function App() {
 // ОТРИСОВЫВАЕМ НАШ ТУДУЛИСТ( В НАШЕМ СЛУЧАЕ МАССИВ ТУДУЛИСТОВ В ПРИМЕРЕ ИХ ИЗНАЧАЛЬНО 2  (СУЩНОСТИ) )
     return (
         <div className="App">
+            <AddItemForm addItem={addTodoList}/>
             {todoListComponents}
         </div>
     );
