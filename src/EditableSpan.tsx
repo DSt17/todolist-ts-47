@@ -1,13 +1,16 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {TextField} from "@material-ui/core";
 
 type EditableSpanPropsType = {
     title: string
-    setNewTitle : (title:string) => void
+    setNewTitle: (title: string) => void
 }
 
 export const EditableSpan = (props: EditableSpanPropsType) => {
+
     const [editMode, setEditMode] = useState<boolean>(false)
-    let [inputValue, setInputValue] = useState<string>("")
+    const [inputValue, setInputValue] = useState<string>("")
+
     const onEditMode = () => {
         setEditMode(true)
         setInputValue(props.title)
@@ -22,18 +25,19 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
     const onPressKeyAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             ofEditMode()
-            }
         }
-
+    }
 
     return (         //OnBlur - событие когда инпут теряет фокус
-        editMode ?                //тут тернароное выражение
-            <input
+        editMode                 //тут тернароное выражение
+            ? <TextField
+                style={{width: '130px'}}
                 value={inputValue}
                 onChange={onChangeHandler}
                 onBlur={ofEditMode}
                 autoFocus={true}
-                onKeyPress={onPressKeyAddItem}/>
+                onKeyPress={onPressKeyAddItem}
+            />
             : <span onDoubleClick={onEditMode}>
                 {props.title}
              </span>
