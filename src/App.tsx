@@ -7,7 +7,7 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import { Menu } from '@material-ui/icons';
 
 export type filterValuesType = "all" | "active" | "completed"
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: filterValuesType
@@ -44,48 +44,43 @@ function App() {
 
 
     //id таски для удал     //ключ массива()
-    function removeTask(taskID: string, todoListID: string) {  //пропуск все таск кроме той что удаляем
+    const removeTask = (taskID: string, todoListID: string) => {  //пропуск все таск кроме той что удаляем
         setTasks({...tasks, [todoListID]: tasks[todoListID].filter(t => t.id !== taskID)})
     }
-
     //тайтл новой задчи  //ключ массива()
-    function addTask(TaskTitle: string, todoListID: string) {
+    const addTask = (TaskTitle: string, todoListID: string) => {
         let newTask: TaskType = {id: v1(), title: TaskTitle, isDone: false}
         setTasks({...tasks, [todoListID]: [newTask, ...tasks[todoListID]]})
     }
-
     //Функия для изменения isDone у таски ( //id таски для chenge  //БУЛЕВО ЧЕКБОКСА  //ключ массива)
-    function changeTaskStatus(taskID: string, isDone: boolean, todoListID: string) {
+    const changeTaskStatus = (taskID: string, isDone: boolean, todoListID: string) => {
         setTasks({
             ...tasks, [todoListID]: tasks[todoListID].map(
                 el => el.id === taskID ? {...el, isDone: isDone} : el)
         })
     }
-
 //Создаем фунуцию для изменения тайтла у таски
     const changeTaskTitle = (taskID: string, title: string, todoListID: string) => {
         setTasks({...tasks, [todoListID]: tasks[todoListID].map(el => el.id === taskID ? {...el, title: title} : el)})
     }
 
     //Меняем настройки фильтра сущности тудулиста
-    function changeFilter(filter: filterValuesType, todoListID: string) {
+    const changeFilter = (filter: filterValuesType, todoListID: string) => {
         setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, filter: filter} : tl))
     }
-
     //Создаем функцию для изменения тайтла
     const changeTodolistTitle = (title: string, todoListID: string) => {
         setTodoLists(todoLists.map(tl => tl.id === todoListID ? {...tl, title: title} : tl))
     }
-
 //----Функции удаляющие и добовляющие сущности тудулистов-----------
     const removeTodoList = (todoListID: string) => {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
         // В объектк с тасками тоже удаляем таски сущности удаляемого тудулиста
         delete tasks[todoListID]
     }
-
     const addTodoList = (title: string) => {
-        const newTodoList: TodoListType = {id: v1(), title: title, filter: "all"}
+        const todoLsitID = v1()
+        const newTodoList: TodoListType = {id: todoLsitID, title: title, filter: "all"}
         setTodoLists([...todoLists, newTodoList])
         setTasks({...tasks, [newTodoList.id]: []})
     }
