@@ -6,13 +6,13 @@ type AddItemFormPropsType = {
 }
 
 //Создаем новую сущность
-export const AddItemForm = (props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo ((props: AddItemFormPropsType) => {
 
     // Вынесли стили для input  в переменную
     const errorInputStyles = {border: "red 3px solid"}
     const errorStyle = {color: "red"}
 
-    // UseState
+
     let [inputValue, setInputValue] = useState<string>("")
     let [error, setError] = useState<boolean>(false)
 
@@ -56,13 +56,6 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
                 error={error}
                 helperText={errorMessage}
             />
-            {/*<input
-                style={error ? errorInputStyles : undefined}
-                value={inputValue}
-                placeholder="Enter title.."
-                onChange={onChangeHandler}
-                onKeyPress={onPressKeyHandler}
-            />*/}
             <IconButton onClick={AddItem} size={"small"} color={"primary"}>
                 <AddBox fontSize={"large"}/>
             </IconButton>
@@ -70,4 +63,4 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
             {/*{errorMessage}*/}
         </div>
     )
-}
+},)
