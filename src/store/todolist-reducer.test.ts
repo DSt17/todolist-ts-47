@@ -5,12 +5,12 @@ import {
     changeTodoListTitleAT, RemoveTodoListAC,
     todolistReducer
 } from "./todolist-reducer";
-import {filterValuesType, TodoListType} from "../App";
+import {FilterValuesType, TodolistType} from "../App";
 
 
 let todolistId1: string;
 let todolistId2: string;
-let startState: Array<TodoListType>
+let startState: Array<TodolistType>
 
 
 beforeEach(() => {
@@ -60,7 +60,7 @@ test('correct todolist should change its name', () => {
 
 test('correct filter of todolist should be changed', () => {
 
-    let newFilter: filterValuesType = "completed";
+    let newFilter: FilterValuesType = "completed";
 
     const action: changeTodoListFilterAT = {
         type: 'CHANGE-TODOLIST-FILTER',

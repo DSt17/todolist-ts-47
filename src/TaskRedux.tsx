@@ -56,7 +56,7 @@ const dispatch  = useDispatch()
             checked={task.isDone}
             onChange={OnChangeCheckboxStatus}
         />
-        <EditableSpan title={task.title} setNewTitle={changeTile}/>
+        <EditableSpan value={task.title} onChange={changeTile}/>
         <IconButton onClick={onClickRemoveTask}>
             <Delete fontSize={'small'}/>
         </IconButton>

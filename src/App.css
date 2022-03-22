@@ -1,44 +1,26 @@
-/*.App {*/
-/*    padding: 30px;*/
-/*    display: flex;*/
-
-
-/*}*/
-
-/*.App > div {*/
-/*    margin-right: 50px;*/
-/*}*/
-
-/*.error {*/
-/*    border: red 3px solid;*/
-/*}*/
-
-/*.error-message {*/
-/*    color: red;*/
-/*}*/
-
-.opacity {
-    opacity: 50%;
+/*
+.App {
+  padding: 30px;
+  display: flex;
 }
 
-/*.filtered-button {*/
-/*    background-color: cornflowerblue;*/
-/*}*/
+.App > div {
+  margin-right: 50px;
+}
 
-/*.borderTodolistBlock {*/
-/*    border: 1px solid black;*/
-/*    border-radius: 5px;*/
-/*}*/
+.error {
+  border: red 1px solid;
+}
 
-/*.borderTodolistBlock h3 {*/
-/*    text-align: center;*/
-/*}*/
+.error-message {
+  color: red;
+}
 
-/*.filtered-button-position {*/
-/*    text-align: center;*/
-/*}*/
+.active-filter {
+  background-color: aquamarine;
+}
 
-/*
-.filtered-button-position button {
-    margin-right: 2px;
-}*/
+.is-done {
+  opacity: 0.5;
+}
+*/

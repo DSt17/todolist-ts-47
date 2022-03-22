@@ -1,66 +1,49 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {IconButton, TextField} from "@material-ui/core";
-import {AddBox} from "@material-ui/icons";
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {Box, Button, FormControl, IconButton, TextField} from '@material-ui/core';
+import {AddBox} from '@material-ui/icons';
+
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-//Создаем новую сущность
-export const AddItemForm = React.memo ((props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
+    console.log("AddItemForm is called")
+    let [title, setTitle] = useState("")
+    let [error, setError] = useState<string | null>(null)
 
-    // Вынесли стили для input  в переменную
-    const errorInputStyles = {border: "red 3px solid"}
-    const errorStyle = {color: "red"}
-
-
-    let [inputValue, setInputValue] = useState<string>("")
-    let [error, setError] = useState<boolean>(false)
+    const addItem = () => {
+        if (title.trim() !== "") {
+            props.addItem(title);
+            setTitle("");
+        } else {
+            setError("Title is required");
+        }
+    }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.currentTarget.value)
-        setError(false)
+        setTitle(e.currentTarget.value)
     }
-    const AddItem = () => {
-        if (inputValue.trim() !== "") {
-            props.addItem(inputValue)
-            setInputValue("")
-        } else {
-            setError(true)
-            setInputValue("")
-        }
-    }
-    const onPressKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            if (inputValue.trim() !== "") {
-                props.addItem(inputValue)
-                setInputValue("")
-            } else {
-                setError(true)
-                setInputValue("")
 
-            }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null);
+        }
+        if (e.charCode === 13) {
+            addItem();
         }
     }
 
-    const errorMessage = error && <div style={errorStyle}>Title is required!</div>
-
-    return (
-        <div>
-            <TextField
-                size={"small"}
-                variant={"outlined"}
-                value={inputValue}
-                onChange={onChangeHandler}
-                onKeyPress={onPressKeyHandler}
-                label={'Title..'}
-                error={error}
-                helperText={errorMessage}
-            />
-            <IconButton onClick={AddItem} size={"small"} color={"primary"}>
-                <AddBox fontSize={"large"}/>
-            </IconButton>
-
-            {/*{errorMessage}*/}
-        </div>
-    )
-},)
+    return <div>
+        <TextField variant="outlined"
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
+        />
+        <IconButton color="primary" onClick={addItem}>
+            <AddBox />
+        </IconButton>
+    </div>
+} );
